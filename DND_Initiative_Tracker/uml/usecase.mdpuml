@@ -1,0 +1,59 @@
+@startuml
+actor User
+actor Admin
+
+Admin --> User : <<inherits>>
+
+usecase "Login as admin" as Login
+User --> Login
+
+
+package "Initiative Tracker" {
+  usecase "View Initiative List" as ViewInitiativeList
+  usecase "View Creature Details" as ViewCreatureDetails
+  usecase "Add Creature" as AddCreature
+  usecase "Delete Creature" as DeleteCreature
+  usecase "Update Creature" as UpdateCreature
+  usecase "Add Status Effect" as AddStatusEffect
+  usecase "Update HP" as UpdateHP
+  usecase "Set Recharge" as SetRecharge
+}
+
+UpdateCreature ..> AddStatusEffect : <<include>>
+UpdateCreature ..> UpdateHP : <<include>>
+UpdateCreature ..> SetRecharge : <<include>>
+
+ViewInitiativeList ..> ViewCreatureDetails : <<includes>>
+
+ViewCreatureDetails ..> UpdateCreature : <<includes>>
+ViewCreatureDetails ..> DeleteCreature: <<includes>>
+
+User --> ViewInitiativeList
+Admin --> ViewCreatureDetails
+Admin --> UpdateCreature
+Admin --> AddCreature
+Admin --> DeleteCreature
+
+
+package "Creature creator"{
+  usecase "View Creature List" as ViewCreatureList
+  usecase "Create Creature" as CreateCreature
+  usecase "View Creature" as ViewCreature
+  usecase "Update Creature" as UpdateCreatureCreator
+  usecase "Delete Creature" as DeleteCreatureCreator
+  usecase "CreatePlayer" as CreatePlayer
+}
+
+CreateCreature ..> CreatePlayer : <<extends>>
+
+ViewCreatureList ..> ViewCreature : <<includes>>
+ViewCreature ..> UpdateCreatureCreator : <<includes>>
+ViewCreature ..> DeleteCreatureCreator : <<includes>>
+
+Admin --> ViewCreatureList
+Admin --> CreateCreature
+Admin --> UpdateCreatureCreator
+Admin --> DeleteCreatureCreator
+
+
+@enduml

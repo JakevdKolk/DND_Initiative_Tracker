@@ -1,0 +1,48 @@
+﻿services:
+  database:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+     - "5432:5432"
+
+  backend:
+    build:
+      context: .
+      dockerfile: DND_Initiative_Tracker/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development   
+      ASPNETCORE_URLS: http://+:8080        
+      ConnectionStrings__DefaultConnection: Host=localhost;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+      
+  frontend:
+      build:
+        context: ./dnd_initiative_frontend
+        dockerfile: Dockerfile
+        target: development
+      environment:
+        NODE_ENV: development
+        CHOKIDAR_USEPOLLING: "true"
+      ports:
+        - "5173:5173"            # Vite dev server -> http://localhost:5173
+      volumes:
+        - ./dnd_initiative_frontend:/app
+        - /app/node_modules       # keep deps inside container so host doesn't shadow them
+
+    
+volumes:
+  pgdata:

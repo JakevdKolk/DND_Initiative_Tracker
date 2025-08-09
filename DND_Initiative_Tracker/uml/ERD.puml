@@ -1,0 +1,123 @@
+@startuml
+
+' hide the spot
+' hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "campain" as campain {
+  *campain_id : number <<generated>>
+  *name : text
+  *description : text
+  *user_id : number <<FK>>
+}
+
+entity "campain_user" as campain_user {
+  *campain_id : number <<FK>>
+  *user_id : number <<FK>>
+}
+
+entity "campain_creatures"{
+  *campain_id : number <<FK>>
+  *creature_id : number <<FK>>
+}
+
+entity "user" as user {
+  *user_id : number <<generated>>
+  *name : text
+  role_id : number <<FK>>
+}
+
+entity "role" as role {
+  *role_id : number <<generated>>
+  *name : text
+}
+
+entity "creature" as creature {
+  *creature_id : number <<generated>>
+  *name : text
+  *size : Enum {"Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"}
+  *type : text
+  *alignment : text
+  *ac : number
+  *hp : number
+  *max_hp : number
+  *initiative : number
+  *speed : text
+  *cr : number
+  *legendary_actions_uses : number
+  *user_id : number <<FK>>
+  *status_effect_id : number <<FK>>
+  *languages : text
+  *proficiency_bonus : number
+  *notes : text
+}
+
+  entity "creature_skill" as creature_skill {
+     *creature_id : number <<FK>>
+     *skill_id : number <<FK>>
+     *modifier : number
+  }
+
+  entity "skills" as skills {
+     *id : number <<generated>>
+     *name : text
+  }
+
+  entity "senses" as sense{
+     *id : number <<generated>>
+     *name : text
+     *description : text
+  }
+
+  entity "creature_senses" as creature_senses {
+     *creature_id : number <<FK>>
+     *sense_id : number <<FK>>
+     *range : number
+  }
+
+  entity "speed" as speed {
+     *id : number <<generated>>
+     *name : text
+     *description : text
+  }
+
+  entity "creature_speed" as creature_speed {
+     *creature_id : number <<FK>>
+     *speed_id : number <<FK>>
+     *speed : number
+  }
+
+    entity "condition" as condition {
+     *id : number <<generated>>
+     *name : text
+     *description : text
+  }
+
+  entity "creature_condition" as creature_condition {
+     *creature_id : number <<FK>>
+     *condition_id : number <<FK>>
+     *duration : number
+  }
+
+  entity "creature_condition_immunity" as creature_condition_immunity {
+     *creature_id : number <<FK>>
+     *condition_id : number <<FK>>
+  }
+
+  entity "creature_abilities"{
+     *creature_id : number <<FK>>
+     *ability_id : number <<FK>>
+     *modifier : number
+    }
+
+  entity "ability" as ability {
+     *id : number <<generated>>
+     *name : text
+     *description : text
+     *recharge : number
+     *ability_type : Enum { "action", "bonus_action", "reaction", "passive", "trait", "legendary_actions" }*
+  }"
+
+@enduml

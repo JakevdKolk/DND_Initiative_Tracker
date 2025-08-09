@@ -1,0 +1,6 @@
+@DND_Initiative_Tracker_HostAddress = http://localhost:5102
+
+GET {{DND_Initiative_Tracker_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
