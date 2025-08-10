@@ -1,0 +1,29 @@
+name: code-qualtiy-backend
+
+on:
+    pull_request: 
+        branches: 
+            - development
+            - main
+            
+            
+jobs:
+    rons-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+          working-directory: DND_Initiative_Tracker
+
+        - name: setup dotnet
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: 8.x
+
+        - name: install dependensies
+          run: dotnet restore
+        
+
+        - name: build
+          run: dotnet build --no-restore
+  
+          
+ 
