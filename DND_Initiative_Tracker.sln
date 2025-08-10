@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.env = .env
 		.env.example = .env.example
+		.gitignore = .gitignore
 		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
@@ -19,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflow", "workflow", "{039694D3-FD30-4CE1-BD2B-7083570D286E}"
 	ProjectSection(SolutionItems) = preProject
 		backend-code-quality.yml = backend-code-quality.yml
+		frontend-code-quality.yml = frontend-code-quality.yml
 	EndProjectSection
 EndProject
 Global

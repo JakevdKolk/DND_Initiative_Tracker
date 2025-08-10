@@ -1,0 +1,30 @@
+name: code-qualtiy-frontend
+
+on:
+    pull_request: 
+        branches: 
+            - development
+            - main
+            
+            
+jobs:
+    rons-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+          working-directory: dnd_initiative_frontend
+
+        - name: Use Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 22
+            cache: npm 
+
+        - name: install deps
+          run: npm ci
+        
+
+        - name: run lint
+          run: npm run lint --if-present
+  
+          
+ 
