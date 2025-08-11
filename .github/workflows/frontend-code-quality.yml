@@ -3,10 +3,21 @@ name: code-quality-frontend
 on:
   pull_request:
     branches: ["development", "master"]
+    paths:
+      - "!DND_Initiative_Tracker/**"
+      - "dnd_initiative_frontend/**"
+
+concurrency:
+  group: ${{github.workflow}}-${{github.event.pull_request.number || github.ref}}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ["20.x", "22.x"]
 
     defaults:
       run:
@@ -19,7 +30,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: ${{matrix.node}}
           cache: npm
           cache-dependency-path: dnd_initiative_frontend/package-lock.json
 
@@ -27,4 +38,4 @@ jobs:
         run: npm ci
 
       - name: Run lint
-        run: npm run lint --if-present
+        run: npm run lint --if-present --max-warnings=0

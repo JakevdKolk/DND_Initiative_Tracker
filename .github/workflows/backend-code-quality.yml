@@ -3,9 +3,20 @@ name: code-quality-backend
 on:
   pull_request:
     branches: ["development", "master"]
+    paths:
+      - "DND_Initiative_Tracker/**"
+      - "!dnd_initiative_frontend/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        dotnet: ["8.0.x"]
     runs-on: ubuntu-latest
 
     defaults:
@@ -19,10 +30,13 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: ${{matrix.dotnet}}
+          cache: true
+          cache-dependency-path: DND_Initiative_Tracker/**/packages.lock.json
+            global.json
 
       - name: Install dependencies
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build --no-restore -warnaserror
