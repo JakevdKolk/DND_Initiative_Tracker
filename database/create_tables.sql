@@ -203,3 +203,15 @@ CREATE TABLE IF NOT EXISTS creature_action (
     spell_prepared BOOLEAN,
     PRIMARY KEY (creature_id, action_id)
 );
+
+CREATE INDEX idx_action_type ON action (action_type);
+
+CREATE INDEX idx_user_owner_creature ON creature (owner_user_id);
+
+CREATE INDEX idx_encounter_death_status ON creature_encounter (death_status);
+
+CREATE INDEX idx_damage_type_category ON creature_damage_types (damage_type_category);
+
+CREATE INDEX idx_skill_type ON skill (skill_type);
+
+CREATE INDEX idx_initiative ON creature_encounter (encounter_id, initiative DESC);
