@@ -5,6 +5,7 @@
 
 
 .env
+.vscode/settings.json
 # User-specific files
 *.rsuser
 *.suo

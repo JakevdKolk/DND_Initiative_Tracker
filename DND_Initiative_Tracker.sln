@@ -23,6 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflow", "workflow", "{03
 		frontend-code-quality.yml = frontend-code-quality.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{8BFFA8C1-6DDF-4002-B81E-FD6D3151EA8B}"
+	ProjectSection(SolutionItems) = preProject
+		create_tables.sql = create_tables.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
