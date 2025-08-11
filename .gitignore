@@ -6,6 +6,7 @@
 
 .env
 .vscode/settings.json
+DND_Initiative_Tracker/appsettings.json
 # User-specific files
 *.rsuser
 *.suo
