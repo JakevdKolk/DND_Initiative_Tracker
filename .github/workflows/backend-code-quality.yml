@@ -30,10 +30,15 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{matrix.dotnet}}
+          dotnet-version: ${{ matrix.dotnet }}
           cache: true
-          cache-dependency-path: DND_Initiative_Tracker/**/packages.lock.json
+          cache-dependency-path: |
             global.json
+            DND_Initiative_Tracker/**/*.sln
+            DND_Initiative_Tracker/**/*.csproj
+            DND_Initiative_Tracker/**/Directory.Packages.props
+            DND_Initiative_Tracker/**/NuGet.config
+            DND_Initiative_Tracker/**/packages.lock.json
 
       - name: Install dependencies
         run: dotnet restore

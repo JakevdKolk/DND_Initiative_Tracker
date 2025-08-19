@@ -1,4 +1,15 @@
+using DND_Initiative_Tracker.Data;
+using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DnDDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .UseSnakeCaseNamingConvention();
+});
 
 // Add services to the container.
 
