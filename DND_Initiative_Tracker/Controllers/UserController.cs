@@ -7,7 +7,7 @@ namespace DND_Initiative_Tracker.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UserController(DnDDbContext db, ILogger<UserController> _logger) : ControllerBase
+    public class UserController(DnDDbContext db) : ControllerBase
     {
       
 

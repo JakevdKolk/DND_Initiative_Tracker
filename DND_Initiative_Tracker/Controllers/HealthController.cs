@@ -7,7 +7,7 @@ namespace DND_Initiative_Tracker.Controllers
 {
     [ApiController]
     [Route("api/health")]
-    public class HealthController(ILogger<UserController> _logger) : ControllerBase
+    public class HealthController() : ControllerBase
     {
 
 
