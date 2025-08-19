@@ -2,6 +2,7 @@
 using DND_Initiative_Tracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DND_Initiative_Tracker.Migrations
 {
     [DbContext(typeof(DnDDbContext))]
-    partial class DnDDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250819220007_added_enums_and_migrations")]
+    partial class added_enums_and_migrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,389 +33,310 @@ namespace DND_Initiative_Tracker.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_ability_score_types");
+                    b.HasKey("Id");
 
-                    b.ToTable("ability_score_types", (string)null);
+                    b.ToTable("AbilityScoreTypes");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.ActionEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ActionType")
-                        .HasColumnType("integer")
-                        .HasColumnName("action_type");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("Area")
-                        .HasColumnType("integer")
-                        .HasColumnName("area");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("AttackBonus")
-                        .HasColumnType("integer")
-                        .HasColumnName("attack_bonus");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<int?>("Range")
-                        .HasColumnType("integer")
-                        .HasColumnName("range");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("Reach")
-                        .HasColumnType("integer")
-                        .HasColumnName("reach");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Recharge")
-                        .HasColumnType("text")
-                        .HasColumnName("recharge");
+                        .HasColumnType("text");
 
                     b.Property<string>("SaveDc")
-                        .HasColumnType("text")
-                        .HasColumnName("save_dc");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_actions");
+                    b.HasKey("Id");
 
                     b.HasIndex("ActionType")
                         .HasDatabaseName("idx_action_type");
 
-                    b.ToTable("actions", (string)null);
+                    b.ToTable("Actions");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<int?>("RoleId")
-                        .HasColumnType("integer")
-                        .HasColumnName("role_id");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id")
-                        .HasName("pk_users");
+                    b.HasKey("Id");
 
-                    b.HasIndex("RoleId")
-                        .HasDatabaseName("ix_users_role_id");
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Campaign", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("DriveLink")
-                        .HasColumnType("text")
-                        .HasColumnName("drive_link");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<string>("VttLink")
-                        .HasColumnType("text")
-                        .HasColumnName("vtt_link");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_campaigns");
+                    b.HasKey("Id");
 
-                    b.ToTable("campaigns", (string)null);
+                    b.ToTable("Campaigns");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CampaignUser", b =>
                 {
                     b.Property<int>("CampaignId")
-                        .HasColumnType("integer")
-                        .HasColumnName("campaign_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
+                        .HasColumnType("integer");
 
-                    b.HasKey("CampaignId", "UserId")
-                        .HasName("pk_campaign_users");
+                    b.HasKey("CampaignId", "UserId");
 
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_campaign_users_user_id");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("campaign_users", (string)null);
+                    b.ToTable("CampaignUsers");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Condition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_conditions");
+                    b.HasKey("Id");
 
-                    b.ToTable("conditions", (string)null);
+                    b.ToTable("Conditions");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Creature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("Ac")
-                        .HasColumnType("integer")
-                        .HasColumnName("ac");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("Hp")
-                        .HasColumnType("integer")
-                        .HasColumnName("hp");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("HpDiceBonus")
-                        .HasColumnType("integer")
-                        .HasColumnName("hp_dice_bonus");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("HpDiceCount")
-                        .HasColumnType("integer")
-                        .HasColumnName("hp_dice_count");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("HpDiceSize")
-                        .HasColumnType("integer")
-                        .HasColumnName("hp_dice_size");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("InitiativeBonus")
-                        .HasColumnType("integer")
-                        .HasColumnName("initiative_bonus");
+                        .HasColumnType("integer");
 
                     b.Property<bool?>("IsNpc")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_npc");
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("LairInitiative")
-                        .HasColumnType("integer")
-                        .HasColumnName("lair_initiative");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("LegendaryActionCharges")
-                        .HasColumnType("integer")
-                        .HasColumnName("legendary_action_charges");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text")
-                        .HasColumnName("notes");
+                        .HasColumnType("text");
 
                     b.Property<int?>("OwnerUserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("owner_user_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("ProficiencyBonus")
-                        .HasColumnType("integer")
-                        .HasColumnName("proficiency_bonus");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("Size")
-                        .HasColumnType("integer")
-                        .HasColumnName("size");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("TypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("type_id");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id")
-                        .HasName("pk_creatures");
+                    b.HasKey("Id");
 
                     b.HasIndex("OwnerUserId")
                         .HasDatabaseName("idx_user_owner_creature");
 
-                    b.HasIndex("TypeId")
-                        .HasDatabaseName("ix_creatures_type_id");
+                    b.HasIndex("TypeId");
 
-                    b.ToTable("creatures", (string)null);
+                    b.ToTable("Creatures");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureAbilityScores", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("AbilityScoreId")
-                        .HasColumnType("integer")
-                        .HasColumnName("ability_score_id");
+                        .HasColumnType("integer");
 
                     b.Property<bool?>("IsSavingThrowProficient")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_saving_throw_proficient");
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("Score")
-                        .HasColumnType("integer")
-                        .HasColumnName("score");
+                        .HasColumnType("integer");
 
-                    b.HasKey("CreatureId", "AbilityScoreId")
-                        .HasName("pk_creature_ability_scores");
+                    b.HasKey("CreatureId", "AbilityScoreId");
 
-                    b.HasIndex("AbilityScoreId")
-                        .HasDatabaseName("ix_creature_ability_scores_ability_score_id");
+                    b.HasIndex("AbilityScoreId");
 
-                    b.ToTable("creature_ability_scores", (string)null);
+                    b.ToTable("CreatureAbilityScores");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureAction", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ActionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("action_id");
+                        .HasColumnType("integer");
 
                     b.Property<bool?>("SpellPrepared")
-                        .HasColumnType("boolean")
-                        .HasColumnName("spell_prepared");
+                        .HasColumnType("boolean");
 
-                    b.HasKey("CreatureId", "ActionId")
-                        .HasName("pk_creature_actions");
+                    b.HasKey("CreatureId", "ActionId");
 
-                    b.HasIndex("ActionId")
-                        .HasDatabaseName("ix_creature_actions_action_id");
+                    b.HasIndex("ActionId");
 
-                    b.ToTable("creature_actions", (string)null);
+                    b.ToTable("CreatureActions");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureCondition", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ConditionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("condition_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("ConditionLength")
-                        .HasColumnType("integer")
-                        .HasColumnName("condition_length");
+                        .HasColumnType("integer");
 
-                    b.HasKey("CreatureId", "ConditionId")
-                        .HasName("pk_creature_conditions");
+                    b.HasKey("CreatureId", "ConditionId");
 
-                    b.HasIndex("ConditionId")
-                        .HasDatabaseName("ix_creature_conditions_condition_id");
+                    b.HasIndex("ConditionId");
 
-                    b.ToTable("creature_conditions", (string)null);
+                    b.ToTable("CreatureConditions");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureDamageType", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("DamageTypeId")
-                        .HasColumnType("integer")
-                        .HasColumnName("damage_type_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("DamageTypeCategory")
-                        .HasColumnType("integer")
-                        .HasColumnName("damage_type_category");
+                        .HasColumnType("integer");
 
-                    b.HasKey("CreatureId", "DamageTypeId")
-                        .HasName("pk_creature_damage_types");
+                    b.HasKey("CreatureId", "DamageTypeId");
 
                     b.HasIndex("DamageTypeCategory")
                         .HasDatabaseName("idx_damage_type_category");
 
-                    b.HasIndex("DamageTypeId")
-                        .HasDatabaseName("ix_creature_damage_types_damage_type_id");
+                    b.HasIndex("DamageTypeId");
 
-                    b.ToTable("creature_damage_types", (string)null);
+                    b.ToTable("CreatureDamageTypes");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureEncounter", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("EncounterId")
-                        .HasColumnType("integer")
-                        .HasColumnName("encounter_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("CurrentHp")
-                        .HasColumnType("integer")
-                        .HasColumnName("current_hp");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("DeathStatus")
-                        .HasColumnType("integer")
-                        .HasColumnName("death_status");
+                        .HasColumnType("integer");
 
                     b.Property<decimal?>("Initiative")
                         .HasPrecision(5, 2)
-                        .HasColumnType("numeric(5,2)")
-                        .HasColumnName("initiative");
+                        .HasColumnType("numeric(5,2)");
 
                     b.Property<int?>("TempHp")
-                        .HasColumnType("integer")
-                        .HasColumnName("temp_hp");
+                        .HasColumnType("integer");
 
-                    b.HasKey("CreatureId", "EncounterId")
-                        .HasName("pk_creature_encounters");
+                    b.HasKey("CreatureId", "EncounterId");
 
                     b.HasIndex("DeathStatus")
                         .HasDatabaseName("idx_encounter_death_status");
@@ -421,363 +345,296 @@ namespace DND_Initiative_Tracker.Migrations
                         .IsDescending(false, true)
                         .HasDatabaseName("idx_initiative");
 
-                    b.ToTable("creature_encounters", (string)null);
+                    b.ToTable("CreatureEncounters");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureLanguage", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("LanguageId")
-                        .HasColumnType("integer")
-                        .HasColumnName("language_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text")
-                        .HasColumnName("notes");
+                        .HasColumnType("text");
 
-                    b.HasKey("CreatureId", "LanguageId")
-                        .HasName("pk_creature_languages");
+                    b.HasKey("CreatureId", "LanguageId");
 
-                    b.HasIndex("LanguageId")
-                        .HasDatabaseName("ix_creature_languages_language_id");
+                    b.HasIndex("LanguageId");
 
-                    b.ToTable("creature_languages", (string)null);
+                    b.ToTable("CreatureLanguages");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureSense", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("SenseId")
-                        .HasColumnType("integer")
-                        .HasColumnName("sense_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("Distance")
-                        .HasColumnType("integer")
-                        .HasColumnName("distance");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text")
-                        .HasColumnName("notes");
+                        .HasColumnType("text");
 
-                    b.HasKey("CreatureId", "SenseId")
-                        .HasName("pk_creature_senses");
+                    b.HasKey("CreatureId", "SenseId");
 
-                    b.HasIndex("SenseId")
-                        .HasDatabaseName("ix_creature_senses_sense_id");
+                    b.HasIndex("SenseId");
 
-                    b.ToTable("creature_senses", (string)null);
+                    b.ToTable("CreatureSenses");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureSkill", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("SkillId")
-                        .HasColumnType("integer")
-                        .HasColumnName("skill_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("BonusOverride")
-                        .HasColumnType("integer")
-                        .HasColumnName("bonus_override");
+                        .HasColumnType("integer");
 
                     b.Property<bool?>("IsExpertise")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_expertise");
+                        .HasColumnType("boolean");
 
                     b.Property<bool?>("IsProficient")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_proficient");
+                        .HasColumnType("boolean");
 
-                    b.HasKey("CreatureId", "SkillId")
-                        .HasName("pk_creature_skills");
+                    b.HasKey("CreatureId", "SkillId");
 
-                    b.HasIndex("SkillId")
-                        .HasDatabaseName("ix_creature_skills_skill_id");
+                    b.HasIndex("SkillId");
 
-                    b.ToTable("creature_skills", (string)null);
+                    b.ToTable("CreatureSkills");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureSpeed", b =>
                 {
                     b.Property<int>("CreatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("creature_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("SpeedId")
-                        .HasColumnType("integer")
-                        .HasColumnName("speed_id");
+                        .HasColumnType("integer");
 
                     b.Property<bool?>("IsHover")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_hover");
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("SpeedValue")
-                        .HasColumnType("integer")
-                        .HasColumnName("speed_value");
+                        .HasColumnType("integer");
 
-                    b.HasKey("CreatureId", "SpeedId")
-                        .HasName("pk_creature_speeds");
+                    b.HasKey("CreatureId", "SpeedId");
 
-                    b.HasIndex("SpeedId")
-                        .HasDatabaseName("ix_creature_speeds_speed_id");
+                    b.HasIndex("SpeedId");
 
-                    b.ToTable("creature_speeds", (string)null);
+                    b.ToTable("CreatureSpeeds");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.CreatureType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_creature_types");
+                    b.HasKey("Id");
 
-                    b.ToTable("creature_types", (string)null);
+                    b.ToTable("CreatureTypes");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.DamageType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_damage_types");
+                    b.HasKey("Id");
 
-                    b.ToTable("damage_types", (string)null);
+                    b.ToTable("DamageTypes");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Encounter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CampaignId")
-                        .HasColumnType("integer")
-                        .HasColumnName("campaign_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text")
-                        .HasColumnName("notes");
+                        .HasColumnType("text");
 
                     b.Property<int?>("TurnCount")
-                        .HasColumnType("integer")
-                        .HasColumnName("turn_count");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id")
-                        .HasName("pk_encounters");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CampaignId")
-                        .HasDatabaseName("ix_encounters_campaign_id");
+                    b.HasIndex("CampaignId");
 
-                    b.ToTable("encounters", (string)null);
+                    b.ToTable("Encounters");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Language", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_languages");
+                    b.HasKey("Id");
 
-                    b.ToTable("languages", (string)null);
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_roles");
+                    b.HasKey("Id");
 
-                    b.ToTable("roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Sense", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_senses");
+                    b.HasKey("Id");
 
-                    b.ToTable("senses", (string)null);
+                    b.ToTable("Senses");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Skill", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<int?>("SkillType")
-                        .HasColumnType("integer")
-                        .HasColumnName("skill_type");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id")
-                        .HasName("pk_skills");
+                    b.HasKey("Id");
 
                     b.HasIndex("SkillType")
                         .HasDatabaseName("idx_skill_type");
 
-                    b.ToTable("skills", (string)null);
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Speed", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_speeds");
+                    b.HasKey("Id");
 
-                    b.ToTable("speeds", (string)null);
+                    b.ToTable("Speeds");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.Spell", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool?>("Concentration")
-                        .HasColumnType("boolean")
-                        .HasColumnName("concentration");
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("Duration")
-                        .HasColumnType("integer")
-                        .HasColumnName("duration");
+                        .HasColumnType("integer");
 
                     b.Property<string>("School")
-                        .HasColumnType("text")
-                        .HasColumnName("school");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("pk_spells");
+                    b.HasKey("Id");
 
-                    b.ToTable("spells", (string)null);
+                    b.ToTable("Spells");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.SpellAction", b =>
                 {
                     b.Property<int>("SpellId")
-                        .HasColumnType("integer")
-                        .HasColumnName("spell_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ActionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("action_id");
+                        .HasColumnType("integer");
 
-                    b.HasKey("SpellId", "ActionId")
-                        .HasName("pk_spell_actions");
+                    b.HasKey("SpellId", "ActionId");
 
-                    b.HasIndex("ActionId")
-                        .HasDatabaseName("ix_spell_actions_action_id");
+                    b.HasIndex("ActionId");
 
-                    b.ToTable("spell_actions", (string)null);
+                    b.ToTable("SpellActions");
                 });
 
             modelBuilder.Entity("DND_Initiative_Tracker.Models.AppUser", b =>
@@ -785,8 +642,7 @@ namespace DND_Initiative_Tracker.Migrations
                     b.HasOne("DND_Initiative_Tracker.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_users_roles_role_id");
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Role");
                 });
@@ -797,15 +653,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("CampaignUsers")
                         .HasForeignKey("CampaignId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_campaign_users_campaigns_campaign_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.AppUser", "User")
                         .WithMany("CampaignUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_campaign_users_users_user_id");
+                        .IsRequired();
 
                     b.Navigation("Campaign");
 
@@ -817,14 +671,12 @@ namespace DND_Initiative_Tracker.Migrations
                     b.HasOne("DND_Initiative_Tracker.Models.AppUser", "OwnerUser")
                         .WithMany("OwnedCreatures")
                         .HasForeignKey("OwnerUserId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .HasConstraintName("fk_creatures_users_owner_user_id");
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DND_Initiative_Tracker.Models.CreatureType", "Type")
                         .WithMany("Creatures")
                         .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_creatures_creature_types_type_id");
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("OwnerUser");
 
@@ -837,15 +689,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("CreatureScores")
                         .HasForeignKey("AbilityScoreId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_ability_scores_ability_score_types_ability_score_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Creature", "Creature")
                         .WithMany("AbilityScores")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_ability_scores_creatures_creature_id");
+                        .IsRequired();
 
                     b.Navigation("AbilityScoreType");
 
@@ -858,15 +708,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("CreatureActions")
                         .HasForeignKey("ActionId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_actions_actions_action_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Creature", "Creature")
                         .WithMany("Actions")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_actions_creatures_creature_id");
+                        .IsRequired();
 
                     b.Navigation("Action");
 
@@ -879,15 +727,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("CreatureConditions")
                         .HasForeignKey("ConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_conditions_conditions_condition_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Creature", "Creature")
                         .WithMany("Conditions")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_conditions_creatures_creature_id");
+                        .IsRequired();
 
                     b.Navigation("Condition");
 
@@ -900,15 +746,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("DamageTypes")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_damage_types_creatures_creature_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.DamageType", "DamageType")
                         .WithMany("CreatureDamageTypes")
                         .HasForeignKey("DamageTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_damage_types_damage_types_damage_type_id");
+                        .IsRequired();
 
                     b.Navigation("Creature");
 
@@ -921,15 +765,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("CreatureEncounters")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_encounters_creatures_creature_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Encounter", "Encounter")
                         .WithMany("CreatureEncounters")
                         .HasForeignKey("EncounterId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_encounters_encounters_encounter_id");
+                        .IsRequired();
 
                     b.Navigation("Creature");
 
@@ -942,15 +784,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("Languages")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_languages_creatures_creature_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Language", "Language")
                         .WithMany("CreatureLanguages")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_languages_languages_language_id");
+                        .IsRequired();
 
                     b.Navigation("Creature");
 
@@ -963,15 +803,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("Senses")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_senses_creatures_creature_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Sense", "Sense")
                         .WithMany("CreatureSenses")
                         .HasForeignKey("SenseId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_senses_senses_sense_id");
+                        .IsRequired();
 
                     b.Navigation("Creature");
 
@@ -984,15 +822,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("Skills")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_skills_creatures_creature_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Skill", "Skill")
                         .WithMany("CreatureSkills")
                         .HasForeignKey("SkillId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_skills_skills_skill_id");
+                        .IsRequired();
 
                     b.Navigation("Creature");
 
@@ -1005,15 +841,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("Speeds")
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_speeds_creatures_creature_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Speed", "Speed")
                         .WithMany("CreatureSpeeds")
                         .HasForeignKey("SpeedId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_creature_speeds_speeds_speed_id");
+                        .IsRequired();
 
                     b.Navigation("Creature");
 
@@ -1024,8 +858,7 @@ namespace DND_Initiative_Tracker.Migrations
                 {
                     b.HasOne("DND_Initiative_Tracker.Models.Campaign", "Campaign")
                         .WithMany("Encounters")
-                        .HasForeignKey("CampaignId")
-                        .HasConstraintName("fk_encounters_campaigns_campaign_id");
+                        .HasForeignKey("CampaignId");
 
                     b.Navigation("Campaign");
                 });
@@ -1036,15 +869,13 @@ namespace DND_Initiative_Tracker.Migrations
                         .WithMany("SpellActions")
                         .HasForeignKey("ActionId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_spell_actions_actions_action_id");
+                        .IsRequired();
 
                     b.HasOne("DND_Initiative_Tracker.Models.Spell", "Spell")
                         .WithMany("SpellActions")
                         .HasForeignKey("SpellId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_spell_actions_spells_spell_id");
+                        .IsRequired();
 
                     b.Navigation("Action");
 
