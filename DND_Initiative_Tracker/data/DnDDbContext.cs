@@ -13,7 +13,7 @@ namespace DND_Initiative_Tracker.Data
 
         // DbSets … (same as I gave you earlier)
         public DbSet<Role> Roles => Set<Role>();
-        public DbSet<AppUser> Users => Set<AppUser>();
+        public DbSet<AppUser> AppUser => Set<AppUser>();
         public DbSet<Campaign> Campaigns => Set<Campaign>();
         public DbSet<CampaignUser> CampaignUsers => Set<CampaignUser>();
         public DbSet<CreatureType> CreatureTypes => Set<CreatureType>();
@@ -64,7 +64,7 @@ namespace DND_Initiative_Tracker.Data
             // --- Relationships (FKs) ---
             model.Entity<AppUser>()
                 .HasOne(u => u.Role)
-                .WithMany(r => r.Users)
+                .WithMany(r => r.AppUsers)
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
