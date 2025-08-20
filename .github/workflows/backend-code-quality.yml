@@ -1,29 +1,47 @@
-name: code-qualtiy-backend
+name: code-quality-backend
 
 on:
-    pull_request: 
-        branches: 
-            - development
-            - master
-            
-            
+  pull_request:
+    branches: ["development", "master"]
+    paths:
+      - "DND_Initiative_Tracker/**"
+      - "!dnd_initiative_frontend/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-    rons-on: ubuntu-latest
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        dotnet: ["8.0.x"]
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: DND_Initiative_Tracker
+
     steps:
-        - uses: actions/checkout@v4
-          working-directory: DND_Initiative_Tracker
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        - name: setup dotnet
-          uses: actions/setup-dotnet@v4
-          with:
-            dotnet-version: 8.x
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+          cache: true
+          cache-dependency-path: |
+            global.json
+            DND_Initiative_Tracker/**/*.sln
+            DND_Initiative_Tracker/**/*.csproj
+            DND_Initiative_Tracker/**/Directory.Packages.props
+            DND_Initiative_Tracker/**/NuGet.config
+            DND_Initiative_Tracker/**/packages.lock.json
 
-        - name: install dependensies
-          run: dotnet restore
-        
+      - name: Install dependencies
+        run: dotnet restore
 
-        - name: build
-          run: dotnet build --no-restore
-  
-          
- 
+      - name: Build
+        run: dotnet build --no-restore -warnaserror

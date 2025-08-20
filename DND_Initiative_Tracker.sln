@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.env = .env
 		.env.example = .env.example
 		.gitignore = .gitignore
+		uml\dnd initiative tracker.png = uml\dnd initiative tracker.png
 		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
