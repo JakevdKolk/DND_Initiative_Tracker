@@ -28,6 +28,8 @@ onMounted(async () => {
     <ul v-else>
       <li v-for="u in users" :key="u.id">
         {{ u.name  }}
+        /
+        {{ u.role.name }}
       </li>
     </ul>
   </div>

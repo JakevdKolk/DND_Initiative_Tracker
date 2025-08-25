@@ -1,4 +1,4 @@
-import http from "@/lib/http";
+import http from "../http";
 import type { User } from "@/types/user";
 
 // optionally set a baseURL somewhere central (vite proxy or full URL)
