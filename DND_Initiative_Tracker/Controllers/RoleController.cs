@@ -8,6 +8,7 @@
     using System.Linq.Expressions;
 
 
+
     namespace DND_Initiative_Tracker.Controllers
     {
         [ApiController]
@@ -32,6 +33,7 @@
             protected override void ApplyUpdate(Role entity, UpdateRoleDto dto)
             {
                 entity.Name = dto.Name;
+
 
             }
 
