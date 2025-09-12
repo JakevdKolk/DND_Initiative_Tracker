@@ -14,8 +14,8 @@ namespace DND_Initiative_Tracker.Controllers
 
         public UserController(DnDDbContext dbContext) : base(dbContext) { }
 
-        protected override Expression<Func<AppUser, AppUserDto>> MapToDto() => u => new(
-           u.Id, u.Name, u.RoleId
+        protected override Expression<Func<AppUser, AppUserDto>> MapToDto() => u => new AppUserDto(
+           u.Id, u.Name, u.Role == null ? null : new RoleDto(u.Role.Id, u.Role.Name)
          );
 
         protected override AppUser MapToEntity(CreateAppUserDto dto) => new()
@@ -25,74 +25,77 @@ namespace DND_Initiative_Tracker.Controllers
         };
 
         protected override Expression<Func<AppUser, bool>> ById(int id) => u => u.Id == id;
-  /*      [HttpPost]
-        [Consumes("application/json")]
-        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status201Created)]
-        public async Task<ActionResult<AppUserDto>> Create([FromBody] CreateAppUserDto dto, CancellationToken ct)
-        {
-            var user = new AppUser { Name = dto.Name, RoleId = dto.RoleId };
-            db.AppUser.Add(user);
-            await db.SaveChangesAsync(ct);
 
-            RoleDto? roleDto = null;
-            if (user.RoleId is int rid)
-            {
-                var role = await db.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Id == rid, ct);
-                if (role != null) roleDto = new RoleDto(role.Id, role.Name);
-            }
+        protected override int GetKey(AppUser entity) => entity.Id;
 
-            var result = new AppUserDto(user.Id, user.Name, roleDto);
+        /*      [HttpPost]
+              [Consumes("application/json")]
+              [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status201Created)]
+              public async Task<ActionResult<AppUserDto>> Create([FromBody] CreateAppUserDto dto, CancellationToken ct)
+              {
+                  var user = new AppUser { Name = dto.Name, RoleId = dto.RoleId };
+                  db.AppUser.Add(user);
+                  await db.SaveChangesAsync(ct);
 
-            return CreatedAtRoute("GetUserById", new { id = user.Id }, result);
-        }
+                  RoleDto? roleDto = null;
+                  if (user.RoleId is int rid)
+                  {
+                      var role = await db.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Id == rid, ct);
+                      if (role != null) roleDto = new RoleDto(role.Id, role.Name);
+                  }
 
-        [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppUserDto>> Destroy([FromRoute] int id, CancellationToken ct)
-        {
-            var user = await db.AppUser.FindAsync(new object?[] { id }, ct);
+                  var result = new AppUserDto(user.Id, user.Name, roleDto);
+
+                  return CreatedAtRoute("GetUserById", new { id = user.Id }, result);
+              }
+
+              [HttpDelete("{id:int}")]
+              [ProducesResponseType(StatusCodes.Status204NoContent)]
+              [ProducesResponseType(StatusCodes.Status404NotFound)]
+              public async Task<ActionResult<AppUserDto>> Destroy([FromRoute] int id, CancellationToken ct)
+              {
+                  var user = await db.AppUser.FindAsync(new object?[] { id }, ct);
 
 
-            if (user == null)
-                return NotFound();
+                  if (user == null)
+                      return NotFound();
 
-            db.AppUser.Remove(user);
-            await db.SaveChangesAsync(ct );
+                  db.AppUser.Remove(user);
+                  await db.SaveChangesAsync(ct );
 
-            return NoContent();
-        }
+                  return NoContent();
+              }
 
-        [HttpPut("{id:int}")]
-        [Consumes("application/json")]
-        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppUserDto>> Update(
-            [FromRoute] int id, [FromBody] UpdateAppUserDto dto, CancellationToken ct)
-        {
-            var user = await db.AppUser.FirstOrDefaultAsync(u => u.Id == id, ct);
+              [HttpPut("{id:int}")]
+              [Consumes("application/json")]
+              [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
+              [ProducesResponseType(StatusCodes.Status404NotFound)]
+              public async Task<ActionResult<AppUserDto>> Update(
+                  [FromRoute] int id, [FromBody] UpdateAppUserDto dto, CancellationToken ct)
+              {
+                  var user = await db.AppUser.FirstOrDefaultAsync(u => u.Id == id, ct);
 
-            if (user == null)
-                return NotFound();
+                  if (user == null)
+                      return NotFound();
 
-            user.Name = dto.Name;
-            user.RoleId = dto.RoleId;
+                  user.Name = dto.Name;
+                  user.RoleId = dto.RoleId;
 
-            await db.SaveChangesAsync(ct);
+                  await db.SaveChangesAsync(ct);
 
-            RoleDto? roleDto = null;
-            if (user.RoleId is int rid)
-            {
-                var role = await db.Roles.AsNoTracking()
-                    .FirstOrDefaultAsync(r => r.Id == rid, ct);
+                  RoleDto? roleDto = null;
+                  if (user.RoleId is int rid)
+                  {
+                      var role = await db.Roles.AsNoTracking()
+                          .FirstOrDefaultAsync(r => r.Id == rid, ct);
 
-                if (role != null)
-                    roleDto = new RoleDto(role.Id, role.Name);
-            }
+                      if (role != null)
+                          roleDto = new RoleDto(role.Id, role.Name);
+                  }
 
-            var result = new AppUserDto(user.Id, user.Name, roleDto);
-            return Ok(result);
-        }*/
+                  var result = new AppUserDto(user.Id, user.Name, roleDto);
+                  return Ok(result);
+              }*/
 
 
     }

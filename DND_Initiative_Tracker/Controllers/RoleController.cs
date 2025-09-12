@@ -15,7 +15,7 @@
         {
             public RoleController(DnDDbContext dbContext) : base(dbContext) { }
 
-            protected override Expression<Func<Role, RoleDto>> MapToDto() => u => new(
+            protected override Expression<Func<Role, RoleDto>> MapToDto() => u => new RoleDto(
                 u.Id, u.Name
             );
 
@@ -25,6 +25,9 @@
             };
 
             protected override Expression<Func<Role, bool>> ById(int id) => u => u.Id == id;
+
+            protected override int GetKey(Role entity) => entity.Id;
+
         }
     }
 

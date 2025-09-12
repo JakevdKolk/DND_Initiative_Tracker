@@ -15,7 +15,7 @@ namespace DND_Initiative_Tracker.Controllers
     {
         public CreatureController(DnDDbContext context) : base(context) { }
 
-        protected override Expression<Func<Creature, CreatureDto>> MapToDto() => u => new(
+        protected override Expression<Func<Creature, CreatureDto>> MapToDto() => u => new CreatureDto(
               u.Id, u.Name, u.Size, u.TypeId, u.Ac, u.Hp, u.HpDiceCount, u.HpDiceSize, u.HpDiceBonus,
               u.LegendaryActionCharges, u.ProficiencyBonus, u.Notes, u.IsNpc, u.LairInitiative, u.InitiativeBonus, u.OwnerUserId
         );
@@ -40,5 +40,7 @@ namespace DND_Initiative_Tracker.Controllers
         };
 
         protected override Expression<Func<Creature, bool>> ById(int id) => u => u.Id == id;
+
+        protected override int GetKey(Creature entity) => entity.Id;
     }
 }

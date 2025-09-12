@@ -21,6 +21,7 @@ namespace DND_Initiative_Tracker.Controllers
         protected abstract Expression<Func<TEntity, TDto>> MapToDto();
         protected abstract TEntity MapToEntity(TCreateDto dto);
         protected abstract Expression<Func<TEntity, bool>> ById(TKey id);
+        protected abstract TKey GetKey(TEntity entity);
 
         [HttpGet]
         public async Task<ActionResult<List<TDto>>> GetAll(CancellationToken ct) =>
