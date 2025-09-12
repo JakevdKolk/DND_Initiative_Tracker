@@ -11,7 +11,7 @@ namespace DND_Initiative_Tracker.Controllers
 
     [ApiController]
     [Route("api/creatures")]
-    public class CreatureController : BaseController<Creature, CreatureDto, CreateCreatureDto, int>
+    public class CreatureController : BaseController<Creature, CreatureDto, CreateCreatureDto, UpdateCreatureDto, int>
     {
         public CreatureController(DnDDbContext context) : base(context) { }
 
@@ -19,6 +19,25 @@ namespace DND_Initiative_Tracker.Controllers
               u.Id, u.Name, u.Size, u.TypeId, u.Ac, u.Hp, u.HpDiceCount, u.HpDiceSize, u.HpDiceBonus,
               u.LegendaryActionCharges, u.ProficiencyBonus, u.Notes, u.IsNpc, u.LairInitiative, u.InitiativeBonus, u.OwnerUserId
         );
+
+        protected override void ApplyUpdate(Creature e, UpdateCreatureDto dto)
+        {
+            e.Name = dto.Name;
+            e.Size = dto.Size;
+            e.TypeId = dto.TypeId;
+            e.Ac = dto.Ac;
+            e.Hp = dto.Hp;
+            e.HpDiceCount = dto.HpDiceCount;
+            e.HpDiceSize = dto.HpDiceSize;
+            e.HpDiceBonus = dto.HpDiceBonus;
+            e.LegendaryActionCharges = dto.LegendaryActionsCharges;
+            e.ProficiencyBonus = dto.ProficienyBonus;
+            e.Notes = dto.Notes;
+            e.IsNpc = dto.IsNpc;
+            e.LairInitiative = dto.LairInitiative;
+            e.InitiativeBonus = dto.InitiativeBonus;
+            e.OwnerUserId = dto.OwnerUserId;
+        }
 
         protected override Creature MapToEntity(CreateCreatureDto dto) => new()
         {

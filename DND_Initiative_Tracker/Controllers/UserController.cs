@@ -9,7 +9,7 @@ namespace DND_Initiative_Tracker.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UserController : BaseController<AppUser, AppUserDto, CreateAppUserDto, int>
+    public class UserController : BaseController<AppUser, AppUserDto, CreateAppUserDto, UpdateAppUserDto, int>
     {
 
         public UserController(DnDDbContext dbContext) : base(dbContext) { }
@@ -17,6 +17,12 @@ namespace DND_Initiative_Tracker.Controllers
         protected override Expression<Func<AppUser, AppUserDto>> MapToDto() => u => new AppUserDto(
            u.Id, u.Name, u.Role == null ? null : new RoleDto(u.Role.Id, u.Role.Name)
          );
+
+        protected override void ApplyUpdate(AppUser entity, UpdateAppUserDto dto)
+        {
+            entity.Name = dto.Name;
+            entity.RoleId = dto.RoleId;
+        }
 
         protected override AppUser MapToEntity(CreateAppUserDto dto) => new()
         {

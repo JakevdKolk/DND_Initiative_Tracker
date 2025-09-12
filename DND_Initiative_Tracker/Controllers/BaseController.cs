@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace DND_Initiative_Tracker.Controllers
 {
-    public abstract class BaseController<TEntity, TDto, TCreateDto, TKey> : Controller
+    public abstract class BaseController<TEntity, TDto, TCreateDto, TUpdateDto, TKey> : Controller
         where TEntity : class
     {
 
@@ -22,6 +22,7 @@ namespace DND_Initiative_Tracker.Controllers
         protected abstract TEntity MapToEntity(TCreateDto dto);
         protected abstract Expression<Func<TEntity, bool>> ById(TKey id);
         protected abstract TKey GetKey(TEntity entity);
+        protected abstract void ApplyUpdate(TEntity entity, TUpdateDto dto);
 
         [HttpGet]
         public async Task<ActionResult<List<TDto>>> GetAll(CancellationToken ct) =>
@@ -33,6 +34,55 @@ namespace DND_Initiative_Tracker.Controllers
             var item = await _dbSet.AsNoTracking().Where(ById(id)).Select(MapToDto()).SingleOrDefaultAsync();
             return item is null ? NotFound() : Ok(item);
 
+
+        }
+
+        [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<ActionResult<TCreateDto>> Create([FromBody] TCreateDto dto, CancellationToken ct)
+        {
+            var item = MapToEntity(dto);
+            await _dbSet.AddAsync(item, ct);
+            await _dbContext.SaveChangesAsync();
+
+            var id = GetKey(item);
+            var created = await _dbSet.AsNoTracking().Where(ById(id)).Select(MapToDto()).SingleAsync();
+
+            return CreatedAtAction(nameof(GetById), new { id }, created);
+            
+        }
+
+        [HttpPut("{id:int}")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<TCreateDto>> Update([FromRoute] TKey id, [FromBody] TUpdateDto dto, CancellationToken ct)
+        {
+            var item = await _dbSet.FirstOrDefaultAsync(ById(id), ct);
+            if(item == null) return NotFound();
+
+            await _dbContext.SaveChangesAsync(ct);
+
+            var result = await _dbSet.AsNoTracking().Where(ById(id)).Select(MapToDto()).SingleAsync(ct);
+
+            return Ok(result);
+
+
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Delete([FromRoute] TKey id, CancellationToken ct) 
+        {
+            var item = await _dbSet.FirstOrDefaultAsync(ById(id), ct);
+            if (item == null) return NotFound();
+
+            _dbSet.Remove(item);
+
+            await _dbContext.SaveChangesAsync(ct);
+            return NoContent();
 
         }
     }
