@@ -1,6 +1,6 @@
 ﻿namespace DND_Initiative_Tracker.Contracts
 {
-    public record AppUserDto(int Id, string Name, RoleDto? Role);
+    public record AppUserDto(int Id, string Name, int? RoleId);
 
     public record CreateAppUserDto(string Name, int RoleId);
 

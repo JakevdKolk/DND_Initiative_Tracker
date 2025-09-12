@@ -3,50 +3,29 @@ using DND_Initiative_Tracker.Data;
 using DND_Initiative_Tracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DND_Initiative_Tracker.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UserController(DnDDbContext db) : ControllerBase
+    public class UserController : BaseController<AppUser, AppUserDto, CreateAppUserDto, int>
     {
 
-        [HttpGet]
-        [ProducesResponseType(typeof(List<AppUserDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<AppUserDto>>> GetAll()
+        public UserController(DnDDbContext dbContext) : base(dbContext) { }
+
+        protected override Expression<Func<AppUser, AppUserDto>> MapToDto() => u => new(
+           u.Id, u.Name, u.RoleId
+         );
+
+        protected override AppUser MapToEntity(CreateAppUserDto dto) => new()
         {
-            var users = await db.AppUser
-                .AsNoTracking()
-                .Select(u => new AppUserDto(
-                    u.Id,
-                    u.Name,
-                    u.Role == null ? null : new RoleDto(u.Role.Id, u.Role.Name)
-                ))
-                .ToListAsync();
+            Name = dto.Name,
+            RoleId = dto.RoleId,
+        };
 
-            return Ok(users);
-        }
-
-        [HttpGet("{id:int}", Name = "GetUserById")]
-        [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppUserDto>> GetById([FromRoute] int id, CancellationToken ct)
-        {
-            var user = await db.AppUser
-                .AsNoTracking()
-                .Where(u => u.Id == id)
-                .Select(u => new AppUserDto(
-                    u.Id,
-                    u.Name,
-                    u.Role == null ? null : new RoleDto(u.Role.Id, u.Role.Name)
-                ))
-                .SingleOrDefaultAsync(ct);
-
-            if (user is null) return NotFound();
-            return Ok(user);
-        }
-
-        [HttpPost]
+        protected override Expression<Func<AppUser, bool>> ById(int id) => u => u.Id == id;
+  /*      [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(typeof(AppUserDto), StatusCodes.Status201Created)]
         public async Task<ActionResult<AppUserDto>> Create([FromBody] CreateAppUserDto dto, CancellationToken ct)
@@ -113,7 +92,7 @@ namespace DND_Initiative_Tracker.Controllers
 
             var result = new AppUserDto(user.Id, user.Name, roleDto);
             return Ok(result);
-        }
+        }*/
 
 
     }
