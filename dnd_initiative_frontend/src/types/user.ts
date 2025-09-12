@@ -1,6 +1,6 @@
 import type { Role } from "./role";
 
-export interface User {
+export interface UserList {
   id: number;
   name: string;
   role: Role;
