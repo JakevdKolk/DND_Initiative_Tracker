@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
+
 namespace DND_Initiative_Tracker.Controllers
 {
     [ApiController]
@@ -33,6 +34,7 @@ namespace DND_Initiative_Tracker.Controllers
         protected override Expression<Func<AppUser, bool>> ById(int id) => u => u.Id == id;
 
         protected override int GetKey(AppUser entity) => entity.Id;
+
 
     }
 }
