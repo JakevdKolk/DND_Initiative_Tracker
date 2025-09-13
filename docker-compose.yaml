@@ -38,7 +38,8 @@
         target: development
       environment:
         NODE_ENV: development
-        CHOKIDAR_USEPOLLING: "true"
+        CHOKIDAR_USEPOLLING: true
+        WATCHPACK_POLLING: true
       ports:
         - "5173:5173"            # Vite dev server -> http://localhost:5173
       volumes:

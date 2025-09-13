@@ -13,6 +13,7 @@
     {
         [ApiController]
         [Route("api/roles")]
+
         public class RoleController : BaseController<Role, RoleDto, CreateRoleDto,UpdateRoleDto, int> 
         {
             public RoleController(DnDDbContext dbContext) : base(dbContext) { }

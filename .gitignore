@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-
+dnd_initiative_frontend/.env*
 .env
 .vscode/settings.json
 DND_Initiative_Tracker/appsettings.json
