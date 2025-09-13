@@ -11,7 +11,7 @@ namespace DND_Initiative_Tracker.Controllers
 
     [ApiController]
     [Route("api/creatures")]
-    public class CreatureController : BaseController<Creature, CreatureDto, CreateCreatureDto, UpdateCreatureDto, int>
+    public class CreatureController : BaseController<Creature, CreatureDto, CreateCreatureDto, int>
     {
         public CreatureController(DnDDbContext context) : base(context) { }
 
@@ -20,7 +20,7 @@ namespace DND_Initiative_Tracker.Controllers
               u.LegendaryActionCharges, u.ProficiencyBonus, u.Notes, u.IsNpc, u.LairInitiative, u.InitiativeBonus, u.OwnerUserId
         );
 
-        protected override void ApplyUpdate(Creature e, UpdateCreatureDto dto)
+        protected override void ApplyUpdate(Creature e, CreateCreatureDto dto)
         {
             e.Name = dto.Name;
             e.Size = dto.Size;

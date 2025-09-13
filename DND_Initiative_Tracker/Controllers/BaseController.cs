@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace DND_Initiative_Tracker.Controllers
 {
-    public abstract class BaseController<TEntity, TDto, TCreateDto, TUpdateDto, TKey> : Controller
+    public abstract class BaseController<TEntity, TDto, TCreateDto, TKey> : Controller
         where TEntity : class
     {
 
@@ -22,7 +22,7 @@ namespace DND_Initiative_Tracker.Controllers
         protected abstract TEntity MapToEntity(TCreateDto dto);
         protected abstract Expression<Func<TEntity, bool>> ById(TKey id);
         protected abstract TKey GetKey(TEntity entity);
-        protected abstract void ApplyUpdate(TEntity entity, TUpdateDto dto);
+        protected abstract void ApplyUpdate(TEntity entity, TCreateDto dto);
 
         [HttpGet]
         public async Task<ActionResult<List<TDto>>> GetAll(CancellationToken ct) =>
@@ -57,11 +57,12 @@ namespace DND_Initiative_Tracker.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TCreateDto>> Update([FromRoute] TKey id, [FromBody] TUpdateDto dto, CancellationToken ct)
+        public async Task<ActionResult<TCreateDto>> Update([FromRoute] TKey id, [FromBody] TCreateDto dto, CancellationToken ct)
         {
             var item = await _dbSet.FirstOrDefaultAsync(ById(id), ct);
             if(item == null) return NotFound();
 
+            ApplyUpdate(item, dto);
             await _dbContext.SaveChangesAsync(ct);
 
             var result = await _dbSet.AsNoTracking().Where(ById(id)).Select(MapToDto()).SingleAsync(ct);

@@ -14,7 +14,7 @@
         [ApiController]
         [Route("api/roles")]
 
-        public class RoleController : BaseController<Role, RoleDto, CreateRoleDto,UpdateRoleDto, int> 
+        public class RoleController : BaseController<Role, RoleDto, CreateRoleDto, int> 
         {
             public RoleController(DnDDbContext dbContext) : base(dbContext) { }
 
@@ -31,7 +31,7 @@
 
             protected override int GetKey(Role entity) => entity.Id;
 
-            protected override void ApplyUpdate(Role entity, UpdateRoleDto dto)
+            protected override void ApplyUpdate(Role entity, CreateRoleDto dto)
             {
                 entity.Name = dto.Name;
 
