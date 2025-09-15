@@ -8,8 +8,8 @@
             string Name,
             string? Description,
             string? VttLink,
-            string? DriveLink
-            List<CampaignUser>
+            string? DriveLink,
+            List<MinimalAppUserDto> Users
         );
 
         public record CreateCampaignDto(

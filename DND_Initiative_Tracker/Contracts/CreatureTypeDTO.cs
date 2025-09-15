@@ -9,6 +9,12 @@
              List<MinimalCreatureDto> Creatures
         );
 
+        public record MinimalCreatureTypeDto(
+            int Id,
+            string Name,
+            string? Description
+        );
+
         public record CreateCreatureTypeDto(
             string Name,
             string? Description

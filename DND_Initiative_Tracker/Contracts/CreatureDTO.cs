@@ -1,6 +1,7 @@
 ﻿
 
 using DND_Initiative_Tracker.Models.Enums;
+using static DND_Initiative_Tracker.Contracts.CreatureTypeDTO;
 
 namespace DND_Initiative_Tracker.Contracts
 {
@@ -8,7 +9,7 @@ namespace DND_Initiative_Tracker.Contracts
         int Id,
         string Name,
         Size? Size,
-        int? TypeId,
+        MinimalCreatureTypeDto? Type,
         int? Ac,
         int? Hp,
         int? HpDiceCount,
@@ -20,7 +21,7 @@ namespace DND_Initiative_Tracker.Contracts
         bool? IsNpc,
         int? LairInitiative,
         int? InitiativeBonus,
-        int? OwnerUserId
+        MinimalAppUserDto? OwnerUser
     );
 
     public record MinimalCreatureDto(

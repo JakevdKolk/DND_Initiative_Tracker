@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
+using static DND_Initiative_Tracker.Contracts.CreatureTypeDTO;
 
 namespace DND_Initiative_Tracker.Controllers
 {
@@ -16,8 +17,11 @@ namespace DND_Initiative_Tracker.Controllers
         public CreatureController(DnDDbContext context) : base(context) { }
 
         protected override Expression<Func<Creature, CreatureDto>> MapToDto() => u => new CreatureDto(
-              u.Id, u.Name, u.Size, u.TypeId, u.Ac, u.Hp, u.HpDiceCount, u.HpDiceSize, u.HpDiceBonus,
-              u.LegendaryActionCharges, u.ProficiencyBonus, u.Notes, u.IsNpc, u.LairInitiative, u.InitiativeBonus, u.OwnerUserId
+              u.Id, u.Name, u.Size,
+              u.Type == null ? null : new MinimalCreatureTypeDto(u.Type.Id, u.Type.Name, u.Type.Description),
+              u.Ac, u.Hp, u.HpDiceCount, u.HpDiceSize, u.HpDiceBonus,
+              u.LegendaryActionCharges, u.ProficiencyBonus, u.Notes, u.IsNpc, u.LairInitiative, u.InitiativeBonus,
+              u.OwnerUser == null ? null : new MinimalAppUserDto(u.OwnerUser.Id, u.OwnerUser.Name)
         );
 
         protected override void ApplyUpdate(Creature e, CreateCreatureDto dto)

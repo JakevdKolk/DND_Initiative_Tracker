@@ -27,7 +27,8 @@ namespace DND_Initiative_Tracker.Controllers
         protected override int GetKey(Campaign entity) => entity.Id;
 
         protected override Expression<Func<Campaign, CampaignDto>> MapToDto() => u => new CampaignDto(
-            u.Id, u.Name, u.Description, u.DriveLink, u.VttLink
+            u.Id, u.Name, u.Description, u.DriveLink, u.VttLink, 
+            u.CampaignUsers.Select(u => new MinimalAppUserDto( u.User.Id, u.User.Name)).OrderBy(u => u.Id).ToList()
         );
 
 
